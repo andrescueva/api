@@ -9,7 +9,7 @@ def message():
     message =    {
         "message": "Any Message",
         "to": "Any Name",
-        "from_": "Any Source",
+        "from": "Any Source",
         "timeToLifeSec": 1
     }
     return message

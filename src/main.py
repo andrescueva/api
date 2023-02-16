@@ -1,6 +1,6 @@
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException
 app = FastAPI()
@@ -9,7 +9,7 @@ app = FastAPI()
 class Message(BaseModel):
     message: str
     to: str
-    from_: str
+    from_: str = Field(...,alias="from")
     timeToLifeSec: int
 
 
