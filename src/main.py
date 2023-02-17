@@ -61,4 +61,4 @@ async def get_token():
 
 @app.get("/health")
 async def get_health_status():
-    return {"status": "OK10"}
+    return {"status": "OK20"}
