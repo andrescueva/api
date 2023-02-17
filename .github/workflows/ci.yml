@@ -10,14 +10,14 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_REGION: eu-west-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: api         # set this to your Amazon ECR repository name
-  ECS_SERVICE: my-super-svc              # set this to your Amazon ECS service name
-  ECS_CLUSTER: ecs                # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: .aws/task-definition.json # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: api           # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
+  AWS_REGION: eu-west-1            
+  ECR_REPOSITORY: api        
+  ECS_SERVICE: my-super-svc  
+  ECS_CLUSTER: ecs                
+  ECS_TASK_DEFINITION: .aws/task-definition.json 
+  CONTAINER_NAME: api
+  API_KEY : ${{ secrets.API_KEY}}
+                                           
 
 permissions:
   contents: read
@@ -63,7 +63,7 @@ jobs:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
-        environment-variables: "API_KEY=1111111111111111111111111111111"
+        environment-variables: "API_KEY=${API_KEY}"
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
