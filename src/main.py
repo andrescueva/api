@@ -1,8 +1,12 @@
 from fastapi import FastAPI, Depends, Header
 from starlette.exceptions import HTTPException
-from src.api_keys import API_KEY
 import jwt
 from src.models import Message
+
+API_KEY = "2f5ae96c-b558-4c7b-a590-a501ae1c3f6c"  # os.getenv("API_KEY")
+SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI()
 
@@ -44,12 +48,12 @@ async def send_message():
 
 
 def create_jwt():
-    payload = "ANY"
-    jwt_token = jwt.encode(payload, "secret_key", algorithm="HS256")
+    payload = {"key": "ANY"}
+    jwt_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     return jwt_token
 
 
+@app.get("/jwt/")
 async def get_token():
     token = create_jwt()
-
     return {"token": token}
