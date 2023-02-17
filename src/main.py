@@ -57,3 +57,8 @@ def create_jwt():
 async def get_token():
     token = create_jwt()
     return {"token": token}
+
+
+@app.get("/health")
+async def get_health_status():
+    return {"status": "OK"}
