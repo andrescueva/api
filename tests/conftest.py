@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from src.main import app
-
+import os
 
 
 @pytest.fixture
@@ -17,5 +17,7 @@ def message():
 
 @pytest.fixture
 def client():
+
     client = TestClient(app)
     return client
+
