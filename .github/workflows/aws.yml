@@ -37,8 +37,8 @@ on:
 env:
   AWS_REGION: eu-west-1                   # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: api         # set this to your Amazon ECR repository name
-  ECS_SERVICE: api                # set this to your Amazon ECS service name
-  ECS_CLUSTER: api                # set this to your Amazon ECS cluster name
+  ECS_SERVICE: test-lb                # set this to your Amazon ECS service name
+  ECS_CLUSTER: demo                # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: api           # set this to the name of the container in the
@@ -82,7 +82,6 @@ jobs:
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
     - name: Fill in the new image ID in the Amazon ECS task definition
-      if: ${{ false }} 
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
@@ -91,7 +90,6 @@ jobs:
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
-      if: ${{ false }} 
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
