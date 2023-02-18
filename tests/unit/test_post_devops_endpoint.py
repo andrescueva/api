@@ -9,6 +9,6 @@ def test_check_response_payload_from_send_message(message, client):
         }
     response = client.post("/DevOps/", json=message, headers=headers)
     expected_message = f"Hello {message['to']} your message will be send"
-    #assert response.json()["message"] == expected_message
+    assert response.json()["message"] == expected_message
     assert response.status_code == 200
 

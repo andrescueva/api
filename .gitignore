@@ -2,3 +2,5 @@
 *.pyc
 __pycache__/
 notes*
+.env
+.pytest_cache

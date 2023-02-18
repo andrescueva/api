@@ -1,8 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from src.main import app
-import os
-
+from microsvc.main import app
 
 @pytest.fixture
 def message():
