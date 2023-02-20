@@ -1,5 +1,5 @@
 
-name: Build Image
+name: CI
 on:
   push:
     branches:
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   lint:
-    name: Static code analys
+    name: Static code analysis
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
