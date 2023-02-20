@@ -44,4 +44,4 @@ async def get_token(token: str = Depends(create_jwt)):
 
 @app.get("/health")
 async def get_health_status():
-    return {"status": "OK40"}
+    return {"status": "OK20"}
