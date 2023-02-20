@@ -32,7 +32,7 @@ jobs:
         pip install pylint
     - name: run analysis with pylint
       run: |
-        pylint microsvc
+        pylint microsvc/microservice/*
 
   test:
     name: Test
