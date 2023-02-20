@@ -5,7 +5,8 @@ on:
     tags:
       - 'v*'
       
-anyjob:
-  runs-on: ubuntu-latest
-  steps:
-    - run: echo ${{ github.ref_name }}
+jobs:
+  anyjob:
+   runs-on: ubuntu-latest
+   steps:
+     - run: echo ${{ github.ref_name }}
