@@ -9,9 +9,7 @@ on:
       - '.github/workflows/*'
     tags:
       - v*
-
   workflow_dispatch:
-
 
 permissions:
   contents: read
@@ -32,7 +30,8 @@ jobs:
         pip install pylint
     - name: run analysis with pylint
       run: |
-        pylint microsvc/microservice/*
+        ls *
+        pylint microsvc/microsvc/*
 
   test:
     name: Test
