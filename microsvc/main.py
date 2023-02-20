@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Depends
-from starlette.exceptions import HTTPException
+"""main module with api endpoints
+"""
+from fastapi import FastAPI, Depends, Header, HTTPException
 from microsvc.models import Message
 
 from microsvc.dependencies import validate_api_key, create_jwt
@@ -10,13 +11,16 @@ app = FastAPI()
 
 @app.post("/DevOps/")
 async def send_message(
-
-    message: Message, x_parse_rest_api_key: str = Depends(validate_api_key)
+    message: Message,
+    x_parse_rest_api_key: Header(...)
 ):
     """Post message protected with api key"""
+    if not validate_api_key(x_parse_rest_api_key):
+        raise HTTPException(status_code=401, detail="Invalid API KEY")
+
     message_dict = message.dict()
-    to = message_dict["to"]
-    return {"message": f"Hello {to} your message will be send"}
+    to_destination = message_dict["to"]
+    return {"message": f"Hello {to_destination} your message will be send"}
 
 
 @app.get("/DevOps/")
