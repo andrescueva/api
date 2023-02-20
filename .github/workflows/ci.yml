@@ -26,11 +26,13 @@ jobs:
         python-version: "3.9"
     - name: Install dependencies
       run: |
-        python -m pip install -r requirements/prod.txt
-	      python -m pip install -r requirements/dev.txt
+        python -m pip install --upgrade pip
+        pip install install -r requirements/prod.txt
+        pip install -r requirements/dev.txt
+
     - name: run analysis with pylint
       run: |
-        pylint microsvc/
+        pylint microsvc/*
 
   test:
     name: Test
