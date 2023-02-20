@@ -44,11 +44,19 @@ jobs:
       run: |
         docker build --target test .
 
+  testgithub:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ github.ref_name }}
+          echo ${{ github.event_name }}
+          echo ${{ github.event }}
 
   build:
     name: Build container image and push to ECR
     runs-on: ubuntu-latest
-    if:  startsWith('${{ github.ref_name }}', 'v')
+    if: ${{ false }}
+    #if:  startsWith('${{ github.ref_name }}', 'v')
     outputs:
       image:  ${{ steps.build-image.outputs.image }}
     steps:
