@@ -48,7 +48,7 @@ jobs:
   build:
     name: Build container image and push to ECR
     runs-on: ubuntu-latest
-    if:  startsWith(${{ github.ref_name }}, 'v')
+    if:  startsWith('${{ github.ref_name }}', 'v')
     outputs:
       image:  ${{ steps.build-image.outputs.image }}
     steps:
