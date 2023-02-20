@@ -1,0 +1,11 @@
+name: tets
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+      
+anyjob:
+  runs-on: ubuntu-latest
+  steps:
+  - run: echo ${{ github.ref_name }}
