@@ -11,12 +11,10 @@ on:
         required: false
 env:
 
-  ECR_REPOSITORY: microsvc
   ECS_SERVICE: microsvc
   ECS_CLUSTER: ecs
   ECS_TASK_DEFINITION: .aws/task-definition.json
   CONTAINER_NAME: microsvc
-  AWS_REGION : "eu-west-1"
 
 jobs:
   build:
@@ -33,7 +31,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+        aws-region: ${{ vars.AWS_REGION }}
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
@@ -43,9 +41,9 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ inputs.tag }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        #echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        docker build -t ${{ secrets.ECR_REPOSITORY_URL }}:$IMAGE_TAG .
+        docker push ${{ secrets.ECR_REPOSITORY_URL }}:$IMAGE_TAG
+      
         
   deploy:
     name: Deploy container to ECS service
@@ -68,7 +66,7 @@ jobs:
       id: task-def
       env: 
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE: ${{ env.ECR_REGISTRY}}/${{ env.ECR_REPOSITORY}}:${{ inputs.tag }}
+        IMAGE: ${{ secrets.ECR_REPOSITORY_URL }}:${{ inputs.tag }}
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
