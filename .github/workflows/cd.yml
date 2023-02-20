@@ -17,37 +17,12 @@ env:
   CONTAINER_NAME: microsvc
 
 jobs:
-  build:
-    name: Build container image and push to ECR
-    runs-on: ubuntu-latest
-    outputs:
-      image:  ${{ steps.build-image.outputs.image }}
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ vars.AWS_REGION }}
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ inputs.tag }}
-      run: |
-        docker build -t ${{ secrets.ECR_REPOSITORY_URL }}:$IMAGE_TAG .
-        docker push ${{ secrets.ECR_REPOSITORY_URL }}:$IMAGE_TAG
-      
-        
+
+
+
   deploy:
     name: Deploy container to ECS service
     runs-on: ubuntu-latest
-    needs: build
     environment: production
     steps:
     - name: Checkout
@@ -63,7 +38,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
-      env: 
+      env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE: ${{ secrets.ECR_REPOSITORY_URL }}:${{ inputs.tag }}
       uses: aws-actions/amazon-ecs-render-task-definition@v1
