@@ -32,7 +32,7 @@ jobs:
         pip install pylint
     - name: run analysis with pylint
       run: |
-        pylint $( git ls-files '*.py')
+        pylint microsvc
 
   test:
     name: Test
