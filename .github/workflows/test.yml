@@ -2,11 +2,11 @@ name: test
 on:
   workflow_dispatch:
     inputs:
-      tags:
+      tag:
       
       
 jobs:
   anyjob:
    runs-on: ubuntu-latest
    steps:
-     - run: echo ${{ github.ref_name }}
+     - run: echo ${{ inputs.tag }}
