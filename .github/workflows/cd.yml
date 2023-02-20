@@ -20,7 +20,7 @@ env:
 
 jobs:
   build:
-    if: ${{ inputs.build }} == true
+    if: ${{ github.events.inputs.build }} == true
     name: Build container image and push to ECR
     runs-on: ubuntu-latest
     outputs:
