@@ -31,7 +31,7 @@ jobs:
     - name: run analysis with pylint
       run: |
         ls *
-        pylint microsvc/microsvc/*
+        pylint microsvc/*
 
   test:
     name: Test
