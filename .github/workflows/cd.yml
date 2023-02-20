@@ -18,9 +18,9 @@ env:
 
 jobs:
   build:
-    if: ${{ github.events.inputs.build }} == true
     name: Build container image and push to ECR
     runs-on: ubuntu-latest
+    if: ${{ inputs.build }} 
     outputs:
       image:  ${{ steps.build-image.outputs.image }}
     steps:
