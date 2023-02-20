@@ -5,10 +5,6 @@ on:
       tag:
         description: 'Tag to deploy'
         required: true
-      build:
-        description: "Build container image, if you want to deploy only a specific tag uncheck the box"
-        type: boolean
-        required: false
 env:
 
   ECS_SERVICE: microsvc
