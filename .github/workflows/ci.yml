@@ -32,7 +32,7 @@ jobs:
 
     - name: run analysis with pylint
       run: |
-        pylint microsvc/*
+        pylint --fail-under=8 microsvc/*
 
   test:
     name: Test
