@@ -12,7 +12,7 @@ app = FastAPI()
 @app.post("/DevOps/")
 async def send_message(
     message: Message,
-    x_parse_rest_api_key: Header(...)
+    x_parse_rest_api_key: str = Header(...)
 ):
     """Post message protected with api key"""
     if not validate_api_key(x_parse_rest_api_key):
