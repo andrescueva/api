@@ -15,7 +15,6 @@ RUN useradd -m nonroot
 ENV API_KEY=secret
 ENV SECRET_KEY=secret
 ENV ALGORITHM=HS256
-ENV ACCESS_TOKEN_EXPIRE_MINUTES=30
 RUN chown -R nonroot:nonroot microsvc
 EXPOSE 8000
 USER nonroot

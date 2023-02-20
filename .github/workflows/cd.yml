@@ -45,7 +45,6 @@ jobs:
           API_KEY=${{ secrets.API_KEY }}
           SECRET_KEY=${{ secrets.SECRET_KEY }}
           ALGORITHM=${{ vars.ALGORITHM }}
-          ACCESS_TOKEN_EXPIRE_MINUTES=${{ vars.ACCESS_TOKEN_EXPIRE_MINUTES }}
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:

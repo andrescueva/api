@@ -1,23 +1,34 @@
 """main module with api endpoints
 """
-from fastapi import FastAPI, Depends, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from microsvc.models import Message
 
-from microsvc.dependencies import validate_api_key, create_jwt
+from microsvc.dependencies import (
+    is_api_key_valid, create_jwt, is_valid_token,
+    invalidate_token)
 
+from microsvc.dependencies import IdGenerator
+
+
+
+id_generator = iter(IdGenerator())
 
 app = FastAPI()
-
 
 @app.post("/DevOps/")
 async def send_message(
     message: Message,
-    x_parse_rest_api_key: str = Header(...)
+    x_parse_rest_api_key: str = Header(...),
+    x_jwt_kwy: str = Header(...),
 ):
     """Post message protected with api key"""
-    if not validate_api_key(x_parse_rest_api_key):
+    if not is_api_key_valid(x_parse_rest_api_key):
         raise HTTPException(status_code=401, detail="Invalid API KEY")
 
+    if not is_valid_token(x_jwt_kwy):
+        return {"token": "Invalid token"}
+
+    invalidate_token(x_jwt_kwy)
     message_dict = message.dict()
     to_destination = message_dict["to"]
     return {"message": f"Hello {to_destination} your message will be send"}
@@ -48,7 +59,8 @@ async def patch_send_message():
 
 
 @app.get("/jwt/")
-async def get_token(token: str = Depends(create_jwt)):
+async def get_token():
+    token = create_jwt(next(id_generator))
     """endpoint to get token"""
     return {"token": token}
 
