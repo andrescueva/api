@@ -1,9 +1,9 @@
 name: test
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
+    inputs:
+      tags:
+      
       
 jobs:
   anyjob:
