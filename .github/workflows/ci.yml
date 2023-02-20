@@ -46,7 +46,7 @@ jobs:
 
   testgithub:
     runs-on: ubuntu-latest
-    if: startsWith(github.red_name,'v')
+    if: startsWith(github.ref_name,'v')
     steps:
       - run: |
           echo ${{ github.ref_name }}
